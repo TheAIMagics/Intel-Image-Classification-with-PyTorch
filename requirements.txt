@@ -1,0 +1,10 @@
+torch==1.13.0
+torchvision==0.14.0
+pyyaml==6.0
+dill==0.3.6
+from-root==1.0.2
+python-dotenv
+boto3==1.24.84
+botocore-stubs==1.27.86
+mypy-boto3-s3==1.24.76
+types-s3transfer==0.6.0.post4
