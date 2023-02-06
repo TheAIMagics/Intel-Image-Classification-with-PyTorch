@@ -12,3 +12,10 @@ class DataIngestionArtifacts:
 @dataclass
 class DataValidationArtifact:
     validation_status: bool
+
+
+@dataclass
+class ModelTrainerArtifacts:
+    model_path: str
+    result: dict
+    transformer_object_path: str

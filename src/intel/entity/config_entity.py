@@ -22,3 +22,9 @@ class DataIngestionConfig:
 @dataclass
 class DataValidationConfig:
     schema_file_path = os.path.join("config", "schema.yaml")
+
+@dataclass
+class ModelTrainerConfig:
+    model_trainer_artifact_dir = os.path.join(from_root(), ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACT_DIR)
+    model_path: str = os.path.join(model_trainer_artifact_dir, MODEL_NAME)
+    transformer_object_path: str = os.path.join(model_trainer_artifact_dir, TRANSFORM_OBJECT_NAME)
