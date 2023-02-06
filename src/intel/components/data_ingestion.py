@@ -67,5 +67,8 @@ class DataIngestion:
             logging.info(f"Data Ingestion Artifact {data_ingestion_artifact}")
 
             logging.info('Data ingestion is completed Successfully.')
+
+            return data_ingestion_artifact
+            
         except Exception as e:
             raise CustomException(e, sys) from e

@@ -7,3 +7,8 @@ class DataIngestionArtifacts:
     test_file_path: str
     pred_file_path: str
     data_path :str
+
+
+@dataclass
+class DataValidationArtifact:
+    validation_status: bool

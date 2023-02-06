@@ -18,3 +18,9 @@ BUCKET_NAME = 'intel-image-data'
 S3_DATA_FOLDER_NAME = "data.zip"
 DATA_INGESTION_ARTIFACTS_DIR = "DataIngestion"
 UNZIP_FOLDER_NAME = 'data/'
+
+# Data Validation related constants
+SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+
+
+
