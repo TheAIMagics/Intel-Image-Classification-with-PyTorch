@@ -36,3 +36,13 @@ OPTIMIZER = torch.optim.RMSprop
 NUM_CLASSES :int = 6
 TRANSFORM_OBJECT_NAME: str = "transform.pkl"
 
+# constants realted to model evaluation 
+S3_BUCKET_MODEL_URI: str = "s3://intel-image-data/model/"
+MODEL_EVALUATION_DIR: str = "model_evaluation_artifacts"
+S3_MODEL_DIR_NAME: str = "s3_model"
+S3_MODEL_NAME: str = "model.pt"
+BASE_LOSS: int = 4.00
+SHUFFLE = True
+PIN_MEMORY = True
+NUM_WORKERS = 0
+

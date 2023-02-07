@@ -116,9 +116,10 @@ class ModelTraining:
             )
             logging.info(f"modler trainer artifact {model_trainer_artifact}")
             logging.info("model training completed")
+            
             return model_trainer_artifact
 
-            logging.info("model training completed")
+            
         except Exception as e:
             raise CustomException(e, sys)
     

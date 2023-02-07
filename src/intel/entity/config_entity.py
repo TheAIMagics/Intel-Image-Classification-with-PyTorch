@@ -28,3 +28,10 @@ class ModelTrainerConfig:
     model_trainer_artifact_dir = os.path.join(from_root(), ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACT_DIR)
     model_path: str = os.path.join(model_trainer_artifact_dir, MODEL_NAME)
     transformer_object_path: str = os.path.join(model_trainer_artifact_dir, TRANSFORM_OBJECT_NAME)
+
+@dataclass
+class ModelEvaluationConfig:
+    s3_model_path: str = S3_BUCKET_MODEL_URI
+    model_evaluation_artifacts_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, MODEL_EVALUATION_DIR)
+    best_model_dir: str = os.path.join(model_evaluation_artifacts_dir, S3_MODEL_DIR_NAME)
+    best_model: str = os.path.join(best_model_dir, S3_MODEL_NAME)

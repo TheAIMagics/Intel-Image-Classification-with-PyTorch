@@ -2,6 +2,8 @@ import os,sys
 from src.intel.components.data_ingestion import DataIngestion
 from src.intel.components.data_validation import DataValidation
 from src.intel.components.model_training import ModelTraining
+from src.intel.components.model_evaluation import ModelEvaluation
+from src.intel.components.mode_pusher import ModelPusher
 from src.intel.logger import logging
 from src.intel.exception import CustomException
 from src.intel.entity.config_entity import *
@@ -12,6 +14,7 @@ class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
         self.model_trainer_config = ModelTrainerConfig()
+        self.model_evaluation_config = ModelEvaluationConfig()
 
     def start_data_ingestion(self)-> DataIngestionArtifacts:
         logging.info("Entered the start_data_ingestion method of TrainPipeline class")
@@ -46,16 +49,43 @@ class TrainPipeline:
         except Exception as e:
             raise CustomException(e,sys)
 
+    def start_model_evaluation(self,data_ingestion_artifacts: DataIngestionArtifacts,model_trainer_artifacts: ModelTrainerArtifacts) -> ModelEvaluationArtifacts:
+        logging.info("Starting model evaluation in training pipeline")
+        try: 
+            model_evaluation = ModelEvaluation(self.model_evaluation_config, data_ingestion_artifacts, model_trainer_artifacts)
+            logging.info("Evaluating current trained model")
+            model_evaluation_artifacts = model_evaluation.initiate_model_evaluation()
+            logging.info("Model evaluation step completed successfully in train pipeline")
+            return model_evaluation_artifacts
+        except Exception as e:
+            raise CustomException(e, sys)
+
+    def start_model_pusher(self, model_evaluation_artifacts: ModelEvaluationArtifacts):
+        logging.info("Starting model pusher in training pipeline")
+        try: 
+            model_pusher = ModelPusher(model_evaluation_artifacts=model_evaluation_artifacts)
+            logging.info("If model is accepted in model evaluation. Pushing the model into production storage")
+            model_pusher_artifacts = model_pusher.initiate_model_pusher()
+            logging.info("Model pusher step completed successfully in train pipeline")
+            return model_pusher_artifacts
+        except Exception as e:
+            raise CustomException(e, sys)
+
     
     def run_pipeline(self) -> None:
         try:
             logging.info("=================Training pipeline Started =====================")
+            
             data_ingestion_artifact = self.start_data_ingestion()
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             if data_validation_artifact.validation_status:
-                #data_transformation_artifact = self.start_transformation(data_ingestion_artifact=data_ingestion_artifact)
                 model_trainer_artifact = self.start_model_trainer(data_ingestion_artifact=data_ingestion_artifact)
-                print(model_trainer_artifact)
+                model_evaluation_artifacts = self.start_model_evaluation(data_ingestion_artifact, model_trainer_artifact)
+                if model_evaluation_artifacts.is_model_accepted:
+                    model_pusher_artifact = self.start_model_pusher(model_evaluation_artifacts=model_evaluation_artifacts)
+
+            logging.info("=================Training pipeline completed =====================")
+                    
             
         except Exception as e:
             raise CustomException(e,sys) from e
