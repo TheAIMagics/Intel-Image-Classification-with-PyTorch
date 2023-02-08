@@ -1,0 +1,7 @@
+Jupyter Notebook/
+artifacts/
+logs/
+data/
+env/
+demo.py
+template.py
