@@ -46,3 +46,6 @@ SHUFFLE = True
 PIN_MEMORY = True
 NUM_WORKERS = 0
 
+
+# constants realted to prediction pipeline
+PREDICTION_PIPELINE_DIR_NAME: str = "prediction_artifacts"

@@ -27,7 +27,7 @@ class ModelPusher:
                 response = {"is model pushed": False, "S3_model":s3_model_folder_path,"message" : message}
                 logging.info(response)
             model_pusher_artifacts = ModelPusherArtifacts(response=response)
-            logging.info(f"Model evaluation completed! Artifacts: {model_pusher_artifacts}")
+            logging.info(f"Model Pusher completed! Artifacts: {model_pusher_artifacts}")
             logging.info("model training completed")
         except Exception as e:
             raise CustomException(e, sys)
